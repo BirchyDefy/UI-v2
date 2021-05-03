@@ -301,7 +301,7 @@ async function poolBalance(pid){
 let userInfoInt
 async function userInfo(pid){
 	let userInfo = await farmContract.methods.getUserInfo(pid, user.address).call()
-	console.log(userInfo.deposit)
+	
 	let amount = (parseInt(userInfo.deposit) / 1e18)
 	pools[pid].userDep = parseInt(userInfo.deposit)
 	let userShare = amount / pools[pid].lpInFarm * 100
@@ -323,10 +323,10 @@ async function userInfo(pid){
 		$('.userInfo-days-'+pid)[0].innerHTML = ' 0'
 	else
 		$('.userInfo-days-'+pid)[0].innerHTML = ' ' +userInfo.daysSinceDeposit
-	let extraDefy = await farmContract.methods.checkForIL(pid, user.address).call()
+	let extraDefy = await farmContract.methods.checkForIL(pid, user.address).call() / 1e18
 	
 	if(pools[pid].ilp){
-		$('.userInfo-extra-'+pid)[0].innerHTML = ' ' +extraDefy
+		$('.userInfo-extra-'+pid)[0].innerHTML = ' ' +extraDefy.toFixed(2)
 		$('.userInfo-depVal-'+pid)[0].innerHTML = ' ~$' +(parseInt(userInfo.depVal) / 1e36 ).toFixed(2)
 	}else{
 		if($('.userInfo-depVal-'+pid)[0] != undefined)
