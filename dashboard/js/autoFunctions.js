@@ -23,6 +23,7 @@ async function autoContract() {
 		await (defyAuto = new web3.eth.Contract(defyABI, defy))
 		await (wbnbAuto = new web3.eth.Contract(wbnbABI, wbnb))
 		await (busdAuto = new web3.eth.Contract(wbnbABI, busd))
+		await (ilpAuto = new web3.eth.Contract(ilpABI, ilp))
 		
 		await (defyBnbAuto = new web3.eth.Contract(defyBusdABI, defyBnbAddress))
 		await (defyBusdAuto = new web3.eth.Contract(defyBusdABI, defyBusdAddress))
@@ -69,6 +70,9 @@ async function getSupply(){
 		
 	let totalBurn = await defyAuto.methods.totalBurn().call() / 1e18
 	$('.total-burned')[0].innerHTML = '' +totalBurn.toFixed()
+
+	let ilpBalance = await defyAuto.methods.balanceOf(ilp).call() / 1e18
+	$('.ilp-defy-balance')[0].innerHTML = '' +ilpBalance
 }
 
 let currentBnbToDefy
@@ -84,9 +88,10 @@ async function getPancakePrices(){
 	let resDefyBnb = await defyBnbAuto.methods.getReserves().call()	
 	let resDefyBusd = await defyBusdAuto.methods.getReserves().call()
 	let roundData = await priceFeed.methods.latestRoundData().call()
-	console.log(roundData)
 	currentBnbPriceToUsd = roundData.answer / 1e8
-	console.log(currentBnbPriceToUsd)
+
+/* 	console.log(roundData)
+	console.log(currentBnbPriceToUsd) */
 	
 	currentBnbToDefy = await pancakeContract.methods.quote(toHexString(1e18), resDefyBnb._reserve0, resDefyBnb._reserve1).call() / 1e18
 	currentDefyToBnb = await pancakeContract.methods.quote(toHexString(1e18), resDefyBusd._reserve1, resDefyBusd._reserve0).call() / 1e18
@@ -109,10 +114,10 @@ async function getApePrices(){
 	
 	currentApeBnbToDefy = await apeContract.methods.quote(toHexString(1e18), resDefyBnb._reserve1, resDefyBnb._reserve0).call() / 1e18
 	currentApeDefyToBnb = await apeContract.methods.quote(toHexString(1e18), resDefyBusd._reserve0, resDefyBusd._reserve1).call() / 1e18
-	console.log(currentApeBnbToDefy)
-	console.log(currentApeDefyToBnb)
+/* 	console.log(currentApeBnbToDefy)
+	console.log(currentApeDefyToBnb) */
 	
-	currentApeBusdToDefy = await ilpContract.methods.getDefyPrice().call() / 1e18
+	currentApeBusdToDefy = await ilpAuto.methods.getDefyPrice().call() / 1e18
 	
 	$('.defy-bnb-price')[0].innerHTML = '1 BNB = ~'+currentApeBnbToDefy.toFixed(2)+' DEFY'
 	$('.defy-busd-price')[0].innerHTML = '~$'+currentApeBusdToDefy.toFixed(2)

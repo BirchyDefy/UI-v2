@@ -19,6 +19,7 @@ let farmAuto = undefined
 let defyAuto = undefined
 let wbnbAuto = undefined
 let busdAuto = undefined
+let ilpAuto = undefined
 
 //PancakeSwap
 const pancakeAddress = "0x05fF2B0DB69458A0750badebc4f9e13aDd608C7F"
@@ -321,8 +322,16 @@ async function userInfo(pid){
 	//ILP Stuff
 	if(userInfo.daysSinceDeposit > 10000)
 		$('.userInfo-days-'+pid)[0].innerHTML = ' 0'
-	else
-		$('.userInfo-days-'+pid)[0].innerHTML = ' ' +userInfo.daysSinceDeposit
+	else{
+		let daysLeft = 30 - userInfo.daysSinceDeposit
+		if(pools[pid].ilp){
+			if(userInfo.daysSinceDeposit >= 30)
+				$('.userInfo-days-'+pid)[0].innerHTML = 'ILP Active'
+			else
+				$('.userInfo-days-'+pid)[0].innerHTML = ' ' +(daysLeft)+ " Days 'Til Active"
+		}else
+			$('.userInfo-days-'+pid)[0].innerHTML = ' ' +(userInfo.daysSinceDeposit)
+	}
 	let extraDefy = await farmContract.methods.checkForIL(pid, user.address).call() / 1e18
 	
 	if(pools[pid].ilp){
