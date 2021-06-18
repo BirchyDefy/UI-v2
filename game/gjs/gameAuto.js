@@ -45,38 +45,25 @@ let gameTimer;
 async function getGameDeadline(){
 	let gameDeadline = await gameAuto.methods.DEADLINE().call() * 1000
 
-	let endTime = new Date(gameDeadline)
-/* 	let endHours = new Date(gameDeadline).getHours()
-	let ampm = " AM"
-	if(endHours / 12 > 1){
-		ampm = " PM"
-		endHours -= 12
-	} */
+	let endTime = new Date(gameDeadline).getTime()
 
 	gameTimer = setInterval(function time() {
-		let now = new Date()
-		if(now < endTime){
-			let days = endTime.getDay() - now.getDay() - 1
-			if(days < 0)
-				days = 0
 
-			let hours = endTime.getHours() - now.getHours() - 1
-			if(hours < 0)
-				hours = 0
+		var now = new Date().getTime();
+		var distance = endTime - now;
 
-			let min = endTime.getMinutes() - now.getMinutes()
-			if(endTime.getMinutes() < now.getMinutes())
-				min = 59 + endTime.getMinutes() - now.getMinutes()
+		var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+		var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+		var min = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+		var sec = Math.floor((distance % (1000 * 60)) / 1000);
 
-			let sec = endTime.getSeconds() - now.getSeconds()
-			if(endTime.getSeconds() < now.getSeconds())
-				sec = 59 + endTime.getSeconds() - now.getSeconds()
 
-			$('.game-countdown')[0].innerHTML = '<p>' + zeroPrefix(days) + 'd ' + zeroPrefix(hours) + 'h ' + zeroPrefix(min) + 'm ' + zeroPrefix(sec) + "s</p>"
-		}else{
+		$('.game-countdown')[0].innerHTML = '<p>' + zeroPrefix(days) + 'd ' + zeroPrefix(hours) + 'h ' + zeroPrefix(min) + 'm ' + zeroPrefix(sec) + "s</p>"
+		if (distance < 0) {
+			clearInterval(gameTimer)
 			$('.game-countdown')[0].innerHTML = '<p>Game complete.</p>'
-
 		}
+		
 	}, 1000);
 }
 
