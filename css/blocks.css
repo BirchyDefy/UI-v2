@@ -5921,10 +5921,10 @@ a.post__title:hover {
 .clients-item {
   display: block;
   text-align: center;
-  opacity: .5;
+  opacity: 1;
   transition: all .3s ease; }
   .clients-item:hover {
-    opacity: 1; }
+    opacity: .5; }
 
 /*------------- #CRYPTO CONVERTER  --------------*/
 .crumina-crypto-converter {
