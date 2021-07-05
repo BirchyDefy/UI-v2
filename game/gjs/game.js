@@ -9,7 +9,7 @@ const network = 'https://bsc-dataseed.binance.org/' //MainNet
 const defy = '0x0acbb2C3D3826B82B17C09e2Dfa605b5279E0C63'
 let defyContract = undefined
 
-const game = '0x1465b5ed398d2197c0A060973085D1a5754131F7'
+const game = '0x70F658d6d07D9Ef5fD401dE2890f81c6461C3416'
 let gameContract = undefined
 
 const wbnb = '0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c'
