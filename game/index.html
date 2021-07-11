@@ -145,10 +145,10 @@
 
 <div class="main-content-wrapper">
 <section>
-		<div class="container">
-			<div class="row pt80">
+		<div class="container ">
+			<div class="row pt80 ">
 
-				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb30">
+			<!--	<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb30">
 					<form class="register-form form--dark" method="post" action="">
 						<header class="crumina-module crumina-heading heading--h2 heading--with-decoration">
 							<h2 class="heading-title">Game Stats</h2>
@@ -189,38 +189,36 @@
 
 
 					</form>
-				</div>
+				</div> -->
 
-				<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 mb30">
-					<form class="login-form form--dark" method="post" action="">
+				
+					<form class="login-form form--dark ">
 						<header class="crumina-module crumina-heading heading--h2 heading--with-decoration">
-							<h2 class="heading-title">Play</h2>
-                            <p>* Entrance Fee 5 DEFY</p>
-                            <p>* One chance per wallet</p>
-                            <p>* Your guess should be between 1 - 100</p>
+							<h2 class="heading-title">Game Over</h2>
+                            <p>Stay tuned for the next round</p>
 						</header>
-						<div class="input-with-icon input-icon--right">
-							<input class="form-control guess-input input--dark input--squared" oninput="updateGuess();" placeholder="Enter a number between 1 - 100" type="number" >
-                            
-						</div>
+                        <ul class="pricing-tables-position">
+                            <li class="position-item">
+                                <div class="currency-details-item">
+									<h6 class="title">1st Winner :</h6>
+									<h6 class="value">0xAF2f0c5b070e8a5dde4431785B7b6ccE0629142E</h6>
+								</div>
+                            <br>
+                                <div class="currency-details-item">
+									<h6 class="title">2nd Winner :</h6>
+									<h6 class="value">0x846efF907468574f754435354722Fd874Af7dED0</h6>
+								</div>
+                            <br>
+                                <div class="currency-details-item">
+									<h6 class="title">3rd Winner :</h6>
+									<h6 class="value">0xf6Cbf061f89446835d62c5E52Bc8DD9E65656457</h6>
+								</div>
+                            </li>
 
-                        <br>
-                        <span class="btn btn--market btn--google btn--with-icon" onclick="random();" >
-                            <div class="text">
-								<span class="title">Random Number</span>
-							</div>
-						</span>
-                        <br><br>
-						<span class="btn btn--large btn--primary btn--with-icon btn--icon-right full-width approve-game" onclick="approveGame();">
-							APPROVE
-							<i class="far fa-check-circle" style="margin-left: 12px;" > </i>
-						</span>
-                        <span class="btn btn--large btn--primary btn--with-icon btn--icon-right full-width deposit-button" onclick="play();">
-							Play NOW
-							<svg class="woox-icon icon-arrow-right"><use xlink:href="#icon-arrow-right"></use></svg>
-						</span>
+
+						</ul>
 					</form>
-				</div>
+				
 			</div>
 		</div>
 	</section>
