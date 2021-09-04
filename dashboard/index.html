@@ -814,8 +814,121 @@
 				</div>
 			</div>
 			<!--------END POOL 4-------->
+            
+            <!----------POOL 5---------->
+			<div class="col-md-6" id='pool-5'>
+				<div class="panel panel-default " style="">
+					<div class="panel-heading" style=" background-color:#233446; color:#56c7c3">
+					<div class="row">
+							<div class="col-md-1 col-xs-0">
+							</div>
+							<div class="col-md-3 col-xs-4" style="text-align:right;" >
+								<img src="files/logo-defy_aoe.png" align="center" width="80%">
+							</div>
+							<div class="col-md-5 col-xs-6" style="text-align:left;" >
+								<img src="files/text-defy_AOE.png" align="center" width="100%">
+							</div>
+							<div class="col-md-2 col-xs-2" style="text-align:right;" >
+								<img src="files/logo-2x.png" align="center" width="80%">
+							</div>
+							<div class="col-md-1 col-xs-0">
+							</div>
+						</div>
+                        
+					</div>
+					<div class="panel-body" style="padding: 0 15px 15px 15px;">
+								
+								
+								<div class="row">
+									<div style="font-size:15px; background-color:#1e2434;  padding:10px 15px;" class="col-md-6 col-xs-6">
+										<p style="color:#56c7c3; margin: 0;">Liquidity </p>
+									</div>
+									<div style="font-size:15px; background-color:#191f2f;  padding:10px 15px;" class="col-md-6 col-xs-6">
+										: <span style="color:#56c7c3; margin: 0;" class="pool-liq-5"></span>
+									</div>
+									<div style="font-size:15px; background-color:#233446; padding:10px 15px;" class="col-md-6 col-xs-6">
+										<p style="color:#56c7c3; margin: 0;">Total Liquidity </p>
+									</div>
+									<div style="font-size:15px; background-color:#1b2838;  padding:10px 15px;" class="col-md-6 col-xs-6">
+										: <span style="color:#56c7c3; margin: 0;" class="total-pool-liq-5"></span>
+									</div>
+									<div style="font-size:15px; background-color:#1e2434; padding:10px 15px;" class="col-md-6 col-xs-6">
+										<p style="color:#56c7c3; margin: 0;">APR </p>
+									</div>
+									<div style="font-size:15px; background-color:#191f2f;  padding:10px 15px;" class="col-md-6 col-xs-6">
+										: <span style="color:#56c7c3; margin: 0;" class="pool-apy-5"></span>
+									</div>
+								</div>
+								<br>
+									<div class="row">
+									<div class="col-md-12 col-xs-12">
+										<label style="color:#56c7c3;">LP Token Balance: </label><a class="user-lp-5"></a>
+									</div>
+									<div class="col-md-9 col-xs-9">
+										<input class="form-control deposit-input-5" oninput="updateDepositAmount(5);" placeholder="Deposit Amount" type="text">
+									</div>
+									<div class="col-md-2 col-xs-2">
+										<button class="btn btn-primary btn-sm btn-block" onclick="maxDeposit(5)">Max</button>
+									</div>
+									<div class="col-md-1 col-xs-1">
+									</div>
+									<br><br><br><br>
+									<div class="col-md-6 col-xs-6 approve-button-5">
+										<button class="btn btn-primary" onclick="approve(5)">Approve</button>
+									</div>
+									<div class="col-md-6 col-xs-6 deposit-button-5">
+										<button class="btn btn-primary" onclick="deposit(5)">Deposit</button>
+									</div>
+								</div>
+								<br>
+								<div class="row" style="background-color:#233446;">
+									<div class="col-md-9 col-xs-9">
+										<p style="color:#56c7c3; margin: 0; padding:10px; font-size:18px; font:arial;">Pending DEFY: <span class="pending-defy-5"></span></p>
+									</div>
+									<div class="col-md-3 col-xs-3"  style="padding:5px 15px;">
+										<button class="btn btn-info btn-block" onclick="harvest(5)">Harvest</button>
+									</div>
+									<br>
+								</div>
+								<div class="row">
+									<br>
+									<div class="col-md-12 col-xs-12">
+										<label style="color:#56c7c3;">Total Staked: </label><a class="userInfo-amount-5"></a>
+									</div>
+									<div class="col-md-12 col-xs-12">
+										<label style="color:#56c7c3;">Staked Value: </label><a class="userInfo-value-5"></a>
+									</div>
+									<div class="col-md-12 col-xs-12">
+										<label style="color:#56c7c3;">Your Pool Share: </label><a class="userInfo-share-5"></a>
+									</div>
+									<div class="col-md-12 col-xs-12">
+										<label style="color:#56c7c3;">Days Since Action: </label><a class="userInfo-days-5"></a>
+									</div>
+									<br><br>
+									<div class="col-md-9 col-xs-9">
+										<input class="form-control withdraw-input-5" oninput="updateWithdrawAmount(5);" placeholder="Withdraw Amount" type="text">
+									</div>
+									<div class="col-md-2 col-xs-2">
+										<button class="btn btn-primary btn-sm btn-block" onclick="maxWithdraw(5)">Max</button>
+									</div>
+									<div class="col-md-1 col-xs-1">
+									</div>
+									
+									<br><br><br><br><br><br>
+									<div class="col-md-6 col-xs-6">
+										<button class="btn btn-primary" onclick="withdraw(5)">Withdraw</button>
+									</div>
+								</div>
+
+					</div>
+				</div>
+			</div>
+			<!--------END POOL 5-------->
+        </div>    
+        <div class="row">
+            
             <!----------POOL BLANK---------->
-			<div class="col-md-6" id='pool-4'>
+			<div class="col-md-6" id='pool-null'>
 				<div class="panel panel-default " style="">
 				<!--	<div class="panel-heading" style=" background-color:#233446; color:#56c7c3">
 					<div class="row">
@@ -872,7 +985,6 @@
 		</div>
 	</div>
 	<br>
-    </div>
 	<!-- END: Content -->
 </body>
     <!-- BEGIN: JS Assets-->

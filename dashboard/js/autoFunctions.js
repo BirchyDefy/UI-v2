@@ -24,12 +24,15 @@ async function autoContract() {
 		await (wbnbAuto = new web3.eth.Contract(wbnbABI, wbnb))
 		await (busdAuto = new web3.eth.Contract(wbnbABI, busd))
 		await (kcakeAuto = new web3.eth.Contract(kcakeABI, kcake))
+		await (aoeAuto = new web3.eth.Contract(AoEABI, aoe))
 		await (ilpAuto = new web3.eth.Contract(ilpABI, ilp))
 		
 		await (defyBnbAuto = new web3.eth.Contract(defyBusdABI, defyBnbAddress))
         await (kcakeBnbAuto = new web3.eth.Contract(defyBusdABI, kcakeBnbAddress))
+        await (aoeBnbAuto = new web3.eth.Contract(defyBusdABI, aoeBnbAddress))
 		await (defyBusdAuto = new web3.eth.Contract(defyBusdABI, defyBusdAddress))
 		await (defyKcakeAuto = new web3.eth.Contract(defyBusdABI, defyKcakeAddress))
+		await (defyAoEAuto = new web3.eth.Contract(defyBusdABI, defyAoEAddress))
 		await (priceFeed = new web3.eth.Contract(priceFeedABI, priceFeedAddress))
 		
 		await (defyBnbApeAuto = new web3.eth.Contract(apePoolABI, defyBnbApeAddress))
@@ -83,6 +86,8 @@ let currentDefyToBnb
 
 let currentBusdToDefy = 0
 let currentBnbToKcake = 0
+let currentBnbToAoE = 0
+
 //let currentDefyToBusd
 
 let currentBnbPriceToUsd
@@ -91,7 +96,8 @@ let walletInt
 async function getPancakePrices(){
 	let resDefyBnb = await defyBnbAuto.methods.getReserves().call()	
 	let resDefyBusd = await defyBusdAuto.methods.getReserves().call()	
-	let resKcakeBnb = await kcakeBnbAuto.methods.getReserves().call()
+	let resKcakeBnb = await kcakeBnbAuto.methods.getReserves().call()	
+	let resAoEBnb = await aoeBnbAuto.methods.getReserves().call()
 	let roundData = await priceFeed.methods.latestRoundData().call()
 	currentBnbPriceToUsd = roundData.answer / 1e8
 
@@ -106,6 +112,10 @@ async function getPancakePrices(){
 	//$('.defy-busd-price')[0].innerHTML = '~$'+currentBusdToDefy.toFixed(2)
     
     currentBnbToKcake = await pancakeContract.methods.quote(toHexString(1e18), resKcakeBnb._reserve1, resKcakeBnb._reserve0).call() / 1e18
+    
+    currentBnbToAoE = 0
+    
+    
 	
 }
 
@@ -142,8 +152,12 @@ async function autoBalances(pid){
 	pools[pid].lpInFarm = parseInt(await contract.methods.balanceOf(farmAddress).call()) / 1e18
 	
 	let resLpToken = await contract.methods.getReserves().call()
+    if(pid == 5){
+	let currentLpTokenPrice = 0
+    }
+    if(pid < 5){
 	let currentLpTokenPrice = await swapContract.methods.quote(toHexString(1e18), resLpToken._reserve0, resLpToken._reserve1).call() / 1e18
-		
+    }
 	pools[pid].totalSupply = parseInt(await contract.methods.totalSupply().call()) / 1e18
 	
 	if(pid == 0){
@@ -162,6 +176,10 @@ async function autoBalances(pid){
 		pools[pid].defyBal = parseInt(await defyAuto.methods.balanceOf(pools[pid].addr).call()) / 1e18
 		$('.pool-apy-'+pid)[0].innerHTML = '' +(rewardPerYear / ( 20/1 * (pools[pid].lpInFarm / pools[pid].totalSupply) * pools[pid].defyBal) * 100).toFixed(2) + '%'
 	}
+    	if(pid == 5){
+		pools[pid].defyBal = parseInt(await defyAuto.methods.balanceOf(pools[pid].addr).call()) / 1e18
+		$('.pool-apy-'+pid)[0].innerHTML = '' + (rewardPerYear / ( 20/2 * (pools[pid].lpInFarm / pools[pid].totalSupply) * pools[pid].defyBal) * 100).toFixed(2) + '%'
+	}
 }
 function getLiqTotals(pid){
 	if(pid == 0)
@@ -174,6 +192,8 @@ function getLiqTotals(pid){
 		getDefyBusdLiq(pid)
 	if(pid == 4)
 		getDefyKcakeLiq(pid)
+    if(pid == 5)
+		getDefyAoELiq(pid)
 
 }
 
@@ -192,6 +212,17 @@ async function getDefyKcakeLiq(pid){
 	let token1Pool = await kcakeAuto.methods.balanceOf(pools[pid].addr).call() / pools[pid].token1Dec
 			
 	pools[pid].lpTokenValueTotal = (currentBusdToDefy * token0Pool) + (token1Pool * currentBnbToKcake * currentBnbPriceToUsd )
+	let totalLiqInFarm = pools[pid].lpTokenValueTotal * (pools[pid].lpInFarm*1e18) / (pools[pid].totalSupply*1e18)
+	
+	$('.pool-liq-'+pid)[0].innerHTML = "" + totalLiqInFarm.toFixed(2)+'$'
+	$('.total-pool-liq-'+pid)[0].innerHTML = "" + pools[pid].lpTokenValueTotal.toFixed(2)+'$'
+}
+
+async function getDefyAoELiq(pid){
+	let token0Pool = await defyAuto.methods.balanceOf(pools[pid].addr).call() / pools[pid].token0Dec
+	let token1Pool = await (aoeAuto.methods.balanceOf(pools[pid].addr).call() * 1e18) / pools[pid].token1Dec
+			
+	pools[pid].lpTokenValueTotal = (currentBusdToDefy * token0Pool) + (token1Pool * currentBnbToAoE * currentBnbPriceToUsd )
 	let totalLiqInFarm = pools[pid].lpTokenValueTotal * (pools[pid].lpInFarm*1e18) / (pools[pid].totalSupply*1e18)
 	
 	$('.pool-liq-'+pid)[0].innerHTML = "" + totalLiqInFarm.toFixed(2)+'$'
